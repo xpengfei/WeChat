@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- XML 配置文件包含对 MyBatis 系统的核心设置 -->
+<configuration>
+	<!-- 属性文件 -->
+	<properties resource="jdbc.properties"/>
+	<!-- 环境配置,即是连接的数据库 -->
+	<environments default="mysql">
+		<environment id="mysql">
+			<!-- 指定事务管理类型,type="JDBC"指直接简单实用了JDBC的提交和回滚设置 -->
+			<transactionManager type="jdbc"/>
+			<!-- dataSource指数据源配置,POOLED是JDBC连接对象的数据源连接池的实现 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}"/>
+				<property name="url" value="${jdbc.url}"/>
+				<property name="username" value="${jdbc.username}"/>
+				<property name="password" value="${jdbc.password}"/>
+
+			</dataSource>
+		</environment>
+	</environments>
+	<!-- mappers告诉Mybatis去哪找持久化映射文件 -->
+	<mappers>
+		<mapper resource="com/xing/dao/impl/Comment_info_Dao_Mapper.xml"/>
+		<mapper resource="com/xing/dao/impl/Essay_info_Dao_Mapper.xml"/>
+		<mapper resource="com/xing/dao/impl/Subscribe_info_Dao_Mapper.xml"/>
+		<mapper resource="com/xing/dao/impl/User_info_Dao_Mapepr.xml"/>
+	</mappers>
+</configuration>

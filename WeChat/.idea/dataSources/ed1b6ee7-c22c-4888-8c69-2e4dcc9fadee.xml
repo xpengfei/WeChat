@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="wechat@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="wechat">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="bank_data"/>
+    <schema id="4" parent="1" name="hibernate"/>
+    <schema id="5" parent="1" name="hrm_db"/>
+    <schema id="6" parent="1" name="information_schema"/>
+    <schema id="7" parent="1" name="mybatis"/>
+    <schema id="8" parent="1" name="mysql"/>
+    <schema id="9" parent="1" name="order_manage"/>
+    <schema id="10" parent="1" name="performance_schema"/>
+    <schema id="11" parent="1" name="restaurant"/>
+    <schema id="12" parent="1" name="restaurant_data"/>
+    <schema id="13" parent="1" name="s2h"/>
+    <schema id="14" parent="1" name="ssh_employee_data"/>
+    <schema id="15" parent="1" name="studentmanage"/>
+    <schema id="16" parent="1" name="sys"/>
+    <schema id="17" parent="1" name="test"/>
+    <schema id="18" parent="1" name="testmysql"/>
+    <schema id="19" parent="1" name="x_mybatis"/>
+    <table id="20" parent="2" name="comment_info"/>
+    <table id="21" parent="2" name="essay_info"/>
+    <table id="22" parent="2" name="subscribe_info"/>
+    <table id="23" parent="2" name="user_info"/>
+    <column id="24" parent="20" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="25" parent="20" name="essay_id">
+      <Position>2</Position>
+      <Comment>文章id</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="26" parent="20" name="comment">
+      <Position>3</Position>
+      <Comment>评论内容</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="27" parent="20" name="comment_time">
+      <Position>4</Position>
+      <Comment>评论时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="28" parent="20" name="praise">
+      <Position>5</Position>
+      <Comment>点赞数</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="29" parent="20" name="reply_content">
+      <Position>6</Position>
+      <Comment>回复内容</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="30" parent="20" name="reply_time">
+      <Position>7</Position>
+      <Comment>回复时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="31" parent="20" name="userId">
+      <Position>8</Position>
+      <Comment>评论者的id信息</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <key id="32" parent="20" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="33" parent="21" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="34" parent="21" name="title">
+      <Position>2</Position>
+      <Comment>文章标题</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="35" parent="21" name="content">
+      <Position>3</Position>
+      <Comment>文章内容</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="36" parent="21" name="praise">
+      <Position>5</Position>
+      <Comment>点赞数</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="37" parent="21" name="browse">
+      <Position>6</Position>
+      <Comment>浏览量</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="38" parent="21" name="puserId">
+      <Position>4</Position>
+      <Comment>公众号的id,作为外键</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <key id="39" parent="21" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="40" parent="22" name="id">
+      <Position>1</Position>
+      <Comment>主键</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="41" parent="22" name="user_id">
+      <Position>2</Position>
+      <Comment>用户id</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="42" parent="22" name="subscribe_id">
+      <Position>3</Position>
+      <Comment>用户订阅的公众号的id</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <key id="43" parent="22" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="44" parent="23" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="45" parent="23" name="nickname">
+      <Position>3</Position>
+      <Comment>昵称</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="46" parent="23" name="image">
+      <Position>4</Position>
+      <Comment>头像</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="47" parent="23" name="password">
+      <Position>6</Position>
+      <Comment>密码</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="48" parent="23" name="phone">
+      <Position>7</Position>
+      <Comment>电话号码</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="49" parent="23" name="sex">
+      <Position>8</Position>
+      <Comment>性别</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="50" parent="23" name="create_time">
+      <Position>10</Position>
+      <Comment>注册时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="51" parent="23" name="account_type">
+      <Position>2</Position>
+      <Comment>账号类型</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="52" parent="23" name="account">
+      <Position>5</Position>
+      <Comment>登录账号</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="53" parent="23" name="signature">
+      <Position>9</Position>
+      <Comment>签名</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <key id="54" parent="23" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

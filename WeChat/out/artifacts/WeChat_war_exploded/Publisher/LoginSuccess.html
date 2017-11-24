@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录成功</title>
+    <!--jQuery核心库-->
+    <script src="../static/easyui/jquery.min.js"></script>
+    <!--easyui核心库-->
+    <script src="../static/easyui/jquery.easyui.min.js"></script>
+    <!--引入easyui的国际化文件,zh_CN.js是显示中文-->
+    <script src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <!--easyui核心UI文件css-->
+    <link rel="stylesheet" href="../static/easyui/themes/default/easyui.css">
+    <!--easyui图标css-->
+    <link rel="stylesheet" href="../static/easyui/themes/icon.css">
+</head>
+<body class="easyui-layout">
+    <!--面板布局-->
+    <div id="welcome" data-options="region:'north'" style="height:40px; ">
+        <!--最上边的面板,可用于显示欢迎信息,欢迎[用户昵称]登录-->
+        <iframe scrolling="no" src="../User/getNickName.jsp"
+                style="border: 0;width:100% ;height: 100%" frameborder="0" ></iframe>
+    </div>
+    <div id="menu" data-options="region:'west',title:'导航菜单'" style="width:150px;">
+        <!--导航菜单栏,树状菜单-->
+        <ul id="menuTree" class="easyui-tree"></ul>
+    </div>
+    <div id="centerPanel" data-options="region:'center',title:'首页' " style="padding:5px;background:#eee;">
+        <!--点击左侧的树状菜单后,会在中间的面板生成对应的tabs-->
+        <div id="tabs" class="easyui-tabs" style="height:100%">
+        </div>
+    </div>
+<script>
+    $('#menuTree').tree({
+        "cascadeCheck":"false",
+        "lines":"true",
+        data:[
+            {
+                "id":1,
+                "text":"账号信息",
+                "state":"open",
+                "attributes":{
+                    "url":"../Publisher/AccountInfo.html"
+                }
+            },
+            {
+                "id":2,
+                "text":"文章管理",
+                "state":"closed",
+                "children":[
+                    {
+                        "id":21,
+                        "text":"编辑文章",
+                        "state":"open",
+                        "attributes":{
+                            "url":"../Publisher/EditEssay.jsp"
+                        }
+                    },
+                    {
+                        "id":22,
+                        "text":"查看文章",
+                        "state":"open",
+                        "attributes":{
+                            "url":"../puserAction/viewAllEssayAction.action"
+                        }
+                    }
+                ]
+            },
+            {
+                "id":3,
+                "text":"热门文章",
+                "state":"open",
+                "attributes":{
+                    "url":"../Publisher/HotEssay.html"
+                }
+            },
+            {
+                "id":4,
+                "text":"最新评论",
+                "state":"open",
+                "attributes":{
+                    "url":"../Publisher/NewComment.html"
+                }
+            }
+        ],
+        onClick:function (node) {
+            if ($('#tabs').tabs('exists',node.text)){
+                //如果tabs已经存在,则选中该tabs
+                $('#tabs').tabs('select',node.text);
+            }else{
+                //如果不存在,则创建该tabs
+                $('#tabs').tabs('add',{
+                   fit:true,
+                    border:false,
+                    title:node.text,
+                    content:'<iframe scrolling="no" src="'+node.attributes.url+'" style="border: 0;width: 100%;height: 100%"></iframe>',
+                    iconCls:'icon-save',
+                    closable:true
+                });
+            }
+        }
+    });
+</script>
+</body>
+</html>

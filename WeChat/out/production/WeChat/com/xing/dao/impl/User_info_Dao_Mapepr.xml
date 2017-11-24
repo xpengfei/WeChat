@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace指用户自定义的命名空间。 -->
+<mapper namespace="com.xing.dao.User_info_Dao">
+    <!-- ParameterType是指参数类型,如果是对象的话,要写其全类名 -->
+    <insert id="add_user" parameterType="com.xing.domain.User_info"
+            useGeneratedKeys="true"  keyProperty="id" >
+        insert into user_info(account_type,nickname,image,account,password,phone,sex,create_time,signature)
+          values(#{account_type},#{nickname},#{image},#{account},#{password},#{phone},#{sex},#{create_time},#{signature})
+    </insert>
+    <!--根据登录账号类型、账号、密码查询账号信息.
+        由于是多参数那么就不能使用parameterType，
+         改用#｛index｝是第几个就用第几个的索引，索引从0开始-->
+    <select id="check_login" resultType="com.xing.domain.User_info">
+        select * from user_info where account_type=#{0} AND account=#{1} AND password=#{2}
+    </select>
+
+
+
+
+
+   <!-- &lt;!&ndash; 删除 &ndash;&gt;
+    <delete id="delete_user_by_id" parameterType="int">
+        delete from x_user
+        where id=#{id}
+    </delete>
+    &lt;!&ndash; 修改 &ndash;&gt;
+    <update id="update_user" parameterType="com.xing.domain.User">
+        update x_user set name=#{name},sex=#{sex},age=#{age} where id={id}
+    </update>
+    &lt;!&ndash; 查询 &ndash;&gt;
+
+    &lt;!&ndash; 查询所有,返回map类型 &ndash;&gt;
+    <resultMap type="com.xing.domain.User" id="map">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="sex" column="sex" />
+        <result property="age" column="age" />
+
+
+    </resultMap>
+
+    <select id="select_all" resultMap="map">
+        select * from x_user
+    </select>-->
+</mapper>
+

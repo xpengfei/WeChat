@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <style>
+        body{
+            background-image: url(/image/login.jpg);
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        #loginTable{
+            position: absolute;
+            top: 100px;
+            left: 0px;
+        }
+    </style>
+</head>
+<body>
+<!-- 表单内含有用户登录输入的信息，表单将信息提交到User_Login_Servlet -->
+<form id="user_login" name="user_login"
+      action="/userAction/loginAction!login" method="post"
+      onsubmit="return check_All(this)">
+    <div id="loginTable">
+        <table id="user_login_table" name="user_login_table"
+               border="0" width="900">
+            <tr>
+                <td width="300" align="right">账号类型：</td>
+                <td width="300" align="left">
+                    <select name="accountType" id="accountType">
+                        <option name="cuser" value="common">普通用户</option>
+                        <option name="puser" value="puser">公众号用户</option>
+                    </select>
+                </td>
+                <td width="300"><span class="error"></span></td>
+            </tr>
+            <tr>
+                <td width="300" align="right">账号：</td>
+                <td width="300" align="left">
+                    <input type="text" value="注册的账号" name="account" id="account"
+                           style="color: #C9C9C9"
+                           onfocus='if (this.value=="注册的账号"){this.value=""; this.style.color="#0A0A0A"}'
+                           onblur="check_Account(this)">
+                </td>
+                <td width="300"><span class="error"></span></td>
+            </tr>
+            <tr>
+                <td width="300" align="right">密码：</td>
+                <td width="300" align="left">
+                    <input type="password" name="password" id="password"
+                           onblur="check_pwd(this)">
+                </td>
+                <td width="300"><span class="error"></span></td>
+            </tr>
+            <tr>
+                <td width="300" align="right"></td>
+                <td width="300" align="left">
+                    <input type="submit" value="登录">
+                    <input type="reset" value="重置">
+                    <a href="/User/Register.jsp">注册</a>
+                </td>
+                <td width="300"></td>
+            </tr>
+        </table>
+    </div>
+</form>
+<script type="text/javascript">
+    <!-- 核对账号输入是否合法 -->
+    function check_Account(inp) {
+        //正则表达式形式，3-16位
+        var reg=/^[0-9a-zA-Z,，\.]{3,16}$/;
+        //判断
+        if(reg.test(inp.value)){
+            var sp=inp.parentNode.parentNode.getElementsByTagName['span'][0];
+            sp.innerHTML='';
+        }else{
+            var sp=inp.parentNode.parentNode.getElementsByTagName('span')[0];
+            sp.innerHTML='账号输入有误！';
+            sp.style.color="#FF0000";
+        }
+    }
+    <!-- 核对密码输入是否符合要求 -->
+    function check_pwd(inp) {
+        var reg=/^[0-9a-zA-Z,，\.]{6,16}$/;
+        //判断
+        if(reg.test(inp.value)){
+            //符合输入要求
+            var sp=inp.parentNode.parentNode.getElementsByTagName('span')[0];
+            sp.innerHTML='';
+            sp.style.color="#00EE00";
+        }else{
+            //不符合输入要求
+            var sp=inp.parentNode.parentNode.getElementsByTagName('span')[0];
+            sp.innerHTML="请输入6-16位密码！";
+            sp.style.color="#FF0000";
+        }
+    }
+
+    <!-- 核对表单里的内容是否全部输入，决定是否提交表单 -->
+    function check_All(loginForm) {
+        check_Account(loginForm.account);
+        check_pwd(loginForm.password);
+        var spans=document.getElementsByClassName('error');
+        for (var i=0;i<spans.length-1;i++){
+            if (spans[i].innerHTML!=''){
+                alert("信息输入有误！");
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

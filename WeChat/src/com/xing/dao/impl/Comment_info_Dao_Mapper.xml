@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace指用户自定义的命名空间。 -->
+<mapper namespace="com.xing.dao.Comment_info_Dao">
+    <insert id="add_comment" parameterType="com.xing.domain.Comment_info"
+            useGeneratedKeys="true"  keyProperty="id">
+        INSERT INTO comment_info(essay_id,comment,comment_time,userId)
+        VALUES (#{essay_id},#{comment},#{comment_time},#{userId})
+    </insert>
+</mapper>
+

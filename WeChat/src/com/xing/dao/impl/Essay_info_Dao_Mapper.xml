@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace指用户自定义的命名空间。 -->
+<mapper namespace="com.xing.dao.Essay_info_Dao">
+    <!--发布文章,有多个参数的情况下,不需要写参数的类型-->
+    <insert id="add_essay" parameterType="com.xing.domain.Essay_info"
+            useGeneratedKeys="true"  keyProperty="id">
+        INSERT INTO essay_info (title,content,userId)
+        VALUES (#{title},#{content},#{userId})
+    </insert>
+    <!--根据公众号的id信息,查询其所发布的所有文章信息-->
+    <select id="getAllEssayById" parameterType="int"
+                resultType="com.xing.domain.Essay_info">
+        SELECT id,title,praise,browse FROM essay_info
+            WHERE puserId=#{id}
+    </select>
+    <!--根据文章的id查询文章的内容-->
+    <select id="getEssayById" parameterType="int"
+            resultType="com.xing.domain.Essay_info">
+        SELECT * FROM essay_info
+            WHERE id=#{id}
+    </select>
+</mapper>
+

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<!-- 将 struts.enable.DynamicMethodInvocation值设置为true的时候可以调用动态方法-->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+	<!--用户登录注册相关处理的Action-->
+   <package name="user" namespace="/userAction" extends="struts-default">
+	   <action name="loginAction" class="com.xing.action.LoginAction" method="login">
+			<result name="success">/User/LoginSuccess.html</result>
+		   <result name="success2">/Publisher/LoginSuccess.html</result>
+		   <!--校验失败后,struts2会将页面转到名为"input"的页面中-->
+		   <result name="input">/User/Login.html</result>
+	   </action>
+	   <action name="registerAction" class="com.xing.action.RegisterAction">
+		   <result name="registerSuccess">/User/Login.html</result>
+	   </action>
+   </package>
+	<!--查询订阅的公众号信息的action-->
+	<package name="querySubInfo" namespace="/querySubInfo" extends="struts-default">
+		<action name="querySub" class="com.xing.controller.GetPublicAccountList" method="getSub">
+			<result name="success">/User/Subscribed.jsp</result>
+		</action>
+		<action name="queryUnSub" class="com.xing.controller.GetPublicAccountList" method="getUnSub">
+			<result name="success">/User/unSubscribed.jsp</result>
+		</action>
+	</package>
+	<!--文章编辑以及查看的Action-->
+	<package name="puser" namespace="/puserAction" extends="struts-default">
+		<action name="addEssayAction" class="com.xing.action.EssayAction" method="add_essay">
+			<result name="success">/Publisher/EditEssay.jsp</result>
+		</action>
+		<!--查询公众号发布的所有文章以及根据文章ID查询相关文章-->
+		<action name="viewAllEssayAction" class="com.xing.controller.GetPuserEssay" method="getAllEssay_ById">
+			<result name="success">/User/showPublicAccount.jsp</result>
+		</action>
+		<action name="viewEssayAction" class="com.xing.controller.GetPuserEssay" method="getEssay_ById">
+			<result name="success">/Publisher/ShowEssay.jsp</result>
+		</action>
+	</package>
+		<!--评论相关的action-->
+	<package name="comment" namespace="/commentAction" extends="struts-default">
+		<!--获取文章的id信息,,便于存储评论信息-->
+		<action name="add_essay_id" class="com.xing.controller.CommentController" method="add_essay_id">
+			<result name="success">/User/writeComment.jsp</result>
+		</action>
+		<!--写完评论提交之后跳转到显示文章的action-->
+		<action name="addComment" class="com.xing.controller.CommentController" method="add_comment">
+			<result type="redirectAction" name="success">
+				<param name="actionName">viewEssayAction</param>
+				<param name="namespace">/puserAction</param>
+			</result>
+		</action>
+
+	</package>
+</struts>

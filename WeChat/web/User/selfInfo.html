@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+    <!--jQuery核心库-->
+    <script src="../static/easyui/jquery.min.js"></script>
+    <!--easyui核心库-->
+    <script src="../static/easyui/jquery.easyui.min.js"></script>
+    <!--easyui核心UI文件css-->
+    <link rel="stylesheet" href="../static/easyui/themes/default/easyui.css">
+    <!--easyui图标css-->
+    <link rel="stylesheet" href="../static/easyui/themes/icon.css">
+    <!--引入easyui的国际化文件,zh_CN.js是显示中文-->
+    <script src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <!--bootstrap的js文件以及css文件-->
+    <script src="../static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../static/bootstrap-3.3.7-dist/css/bootstrap.css">
+</head>
+<body>
+    <div id="self_info" style="padding: 50px;">
+        <table align="center">
+            <tr height="100px">
+                <td width="100px">账号:</td>
+                <td width="120px" id="account"></td>
+            </tr>
+            <tr height="50px">
+                <td width="100px" >昵称:</td>
+                <td width="100px" id="nickname"></td>
+                <td>
+                    <button class="btn btn-primary btn-xs" role="button" onclick="ModifyUserInfo('nickname');">修改</button>
+                </td>
+            </tr>
+            <tr height="50px">
+                <td width="100px">头像:</td>
+                <td width="100px" id="self_image"></td>
+                <td>
+                    <button class="btn btn-primary btn-xs" role="button" onclick="ModifyUserInfo('self_image');">修改</button>
+                </td>
+            </tr>
+
+            <tr height="50px">
+                <td width="100px">密码:</td>
+                <td width="100px" id="password"></td>
+                <td>
+                    <button class="btn btn-primary btn-xs" role="button" onclick="ModifyUserInfo('password');">修改</button>
+                </td>
+            </tr>
+            <tr height="50px">
+                <td width="100px">手机号:</td>
+                <td width="100px" id="phone"></td>
+                <td>
+                    <button class="btn btn-primary btn-xs" role="button" onclick="ModifyUserInfo('phone');">修改</button>
+                </td>
+            </tr>
+            <tr height="50px">
+                <td width="100px">签名:</td>
+                <td width="100px" id="signature"></td>
+                <td>
+                    <button class="btn btn-primary btn-xs" role="button" onclick="ModifyUserInfo('signature');">修改</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button class="btn btn-danger" onclick="ModifyUserInfo('logoutAccount');">注销账号</button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div id="update_self_info" class="easyui-window" title="修改" style="width: 450px;height: 200px"
+         data-options="modal:true,collapsible:false,minimizable:false,maximizable:false,closed:true">
+        <form id="updateselfinfoForm" method="post">
+            <div align="center">
+                <strong id="itemName"></strong>
+                <input id="itemValue" type="text">
+                <a id="confirmBtn" class="easyui-linkbutton" icon="icon-save" href="javascript:void(0)"
+                   onclick="updateItem();">提交</a>
+                <a class="easyui-linkbutton" icon="icon-cancel" href="javascript:void(0);"
+                   onclick="cancelUpdate()";>取消</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        var currentState;
+        //更新个人信息
+        function updateItem() {
+            var itemvalue=$("#itemValue").val();
+            if (currentState!='self_image'){
+                $('#updateselfinfoForm').form('submit',{
+                    url:'',
+                    onSubmit:function () {
+                        if (currentState=='nickname'){
+                            if (itemvalue==''){
+                                $.messager.alert("提示","昵称不能为空!");
+                                return false;
+                            }
+                            $("#itemValue").attr("name","nickname");
+                        }else if(currentState=='password'){
+                            if (itemvalue==''){
+                                $.messager.alert("提示","密码不能为空!");
+                                return false;
+                            }
+                            $("#itemValue").attr("name","password");
+                        }else if(currentState=='phone'){
+                            if (itemvalue==''){
+                                $.messager.alert("提示","手机号不能为空!");
+                                return false;
+                            }
+                            $("#itemValue").attr("name","phone");
+                        }else if(currentState=='signature'){
+                            if (itemvalue==''){
+                                $.messager.alert("提示","签名不能为空!");
+                                return false;
+                            }
+                            $("#itemValue").attr("name","signature");
+                        }
+                    },
+                    success:function (data) {
+                        var msg=JSON.parse(data);
+                        $.messager.alert("提示",msg.msg,null,function () {
+                            if (msg.state=="ok"){
+                                initUserMsg();
+                            }
+                            $("#update_self_info").window("close");
+                        })
+                    }
+                });
+            }else{
+                $("#itemValue").attr("name","self_image");
+                console.log("111111111111111111111111111");
+                $("#updateselfinfoForm").form('submit',{
+                    url:'',
+                    onSubmit:function () {
+                        if (itemvalue.length==0){
+                            $.messager.alert("提示","图片不能为空!");
+                            return false;
+                        }
+                    },
+                    success:function (data) {
+                        var jsonData=JSON.parse(data);
+                        $.messager.alert("提示",jsonData.msg,null,function () {
+                            if (jsonData.state=='ok'){
+                                initUserMsg();
+                            }
+                            $("#update_self_info").window("close");
+                        });
+                    }
+                })
+            }
+        }
+        //取消修改
+        function cancelUpdate() {
+            $("#update_self_info").window("close");
+        }
+        //修改个人信息
+        function ModifyUserInfo(flag) {
+            //设置输入框的值为空
+            $("#itemValue").val("");
+            if (flag=='nickname'){
+                currentState='nickname';
+                $("#updateselfinfo").removeAttr("enctype");
+                $("#itemValue").attr("type","text");
+                $("#itemName").html("请输入新的昵称:");
+
+            }else if(flag=='self_image'){
+                currentState='self_image';
+                $("#updateselfinfo").attr("enctype", "multipart/form-data");
+                $("#itemValue").attr("type","file");
+                $("#itemName").html("请选择新的头像:");
+            }else if(flag=='password'){
+                currentState='password';
+                $("#updateselfinfo").removeAttr("enctype");
+                $("#itemValue").attr("type","text");
+                $("#itemName").html("请输入新密码:");
+            }else if(flag=='phone'){
+                currentState='phone';
+                $("#updateselfinfo").removeAttr("enctype");
+                $("#itemValue").attr("type","text");
+                $("#itemName").html("请输入新的手机号:");
+            }else if(flag=='signature'){
+                currentState='signature';
+                $("#updateselfinfo").removeAttr("enctype");
+                $("#itemValue").attr("type","text");
+                $("#itemName").html("请输入新的签名:");
+            }else if(flag='logoutAccount'){
+                //注销账号警示框
+                $.messager.confirm('提示','账号注销后将不能再次使用,确定注销账号吗?',function (temp) {
+                    if(temp){
+                        $.ajax({
+                                url:'',
+                                success: function (msg) {
+                                    $.messager.alert("提示",msg.msg,null,function () {
+                                        if (msg.state=='ok'){
+                                            top.location.href='../User/login.html';
+                                        }
+                                    });
+                                }
+                            });
+                    }
+                });
+                return;
+            }
+            $("#update_self_info").window("open");
+        }
+        //创建显示个人信息的面板
+        $('#self_info').panel({
+            width:500,
+            height:600
+        });
+        //使用Ajax初始化面板信息,显示出用户的个人信息
+        function initUserMsg() {
+            $.ajax({
+                url:'',
+                success:function (msg) {
+                    $("#account").html(msg.account);
+                    $("#nickname").html(msg.nickname);
+                    $("#self_image").html(msg.image);
+                    $("#password").html(msg.password);
+                    $("#phone").html(msg.phone);
+                    $("#signature").html(msg.signature);
+                }
+            });
+        }
+        initUserMsg();
+    </script>
+</body>
+</html>

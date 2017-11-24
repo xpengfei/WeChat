@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace指用户自定义的命名空间。 -->
+<mapper namespace="com.xing.dao.Subscribe_info_Dao">
+    <!--查询用户订阅或未订阅的公众号,返回结果对象列表-->
+    <select id="getSub_Info" parameterType="int"
+            resultType="com.xing.domain.User_info">
+        SELECT * FROM user_info u,subscribe_info s
+        WHERE s.user_id=#{id} AND u.id=s.subscribe_id
+    </select>
+    <select id="getUnSub_Info" resultType="com.xing.domain.User_info">
+       SELECT * FROM user_info u
+       WHERE u.account_type="puser" AND u.id NOT IN (
+            SELECT subscribe_id FROM subscribe_info s
+            WHERE  s.user_id=#{id}
+       )
+    </select>
+</mapper>
+
